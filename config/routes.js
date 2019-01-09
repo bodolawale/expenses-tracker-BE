@@ -22,13 +22,17 @@ module.exports.routes = {
   /*
    * Users routes
    */
-  'POST /user/signup': {
+  'POST /user/register': {
     controller: 'UsersController',
     action: 'create',
   },
-  'POST /user/signin': {
+  'POST /user/login': {
     controller: 'UsersController',
     action: 'login',
+  },
+  'GET /user/logout': {
+    controller: 'UsersController',
+    action: 'logout',
   },
 
 
