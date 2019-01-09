@@ -24,7 +24,7 @@ module.exports = {
           message: 'Password should be at least 6 characters long',
         });
       }
-      const findUser = await Users.findOne({ email: data.email });
+      const findUser = await User.findOne({ email: data.email });
       if (findUser) {
         return res.send({
           success: false,
@@ -32,7 +32,7 @@ module.exports = {
         });
       }
       const userData = _.pick(data, ['firstName', 'lastName', 'email', 'password']);
-      const user = await Users.create(userData).fetch();
+      const user = await User.create(userData).fetch();
       return res.send({
         success: true,
         message: 'User created Successfully',
@@ -48,12 +48,14 @@ module.exports = {
 
   async login(req, res) {
     try {
-      passport.authenticate('local', (err, user, info) => {
+      passport.authenticate('local', async (err, user, info) => {
         if ((err) || (!user)) {
           return res.send({
             message: info.message,
           });
         }
+        const exp = req.body.remember === true ? sails.config.jwt.rememberExpiry : sails.config.jwt.expiry;
+        const token = jwToken.sign(user, exp);
         req.session.authenticated = true;
         req.session.userId = user.id;
         return res.send(
@@ -62,6 +64,7 @@ module.exports = {
             success: true,
             message: 'Log in successful',
             data: { ...user },
+            token
           },
         );
       })(req, res);
@@ -74,7 +77,7 @@ module.exports = {
   },
   async logout(req, res){
     try {
-      console.log(logout);
+      return res.status(200).json({message: 'Log out successful'});
     } catch (error) {
       return res.send({
         success: false,

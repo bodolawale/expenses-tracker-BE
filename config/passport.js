@@ -6,7 +6,7 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const bcrypt = require('bcryptjs');
 passport.use(new LocalStrategy({usernameField: 'email'}, (email, password, done) => {
-  Users.findOne({
+  User.findOne({
     email
   },(err,user) => {
     if(err){
