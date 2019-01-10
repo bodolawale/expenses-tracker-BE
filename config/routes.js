@@ -34,6 +34,22 @@ module.exports.routes = {
     controller: 'UserController',
     action: 'logout',
   },
+  'GET /user/fetch': {
+    controller: 'UserController',
+    action: 'read',
+  },
+  'PATCH /user/update': {
+    controller: 'UserController',
+    action: 'update',
+  },
+  'PATCH /user/update-password': {
+    controller: 'UserController',
+    action: 'updatePassword',
+  },
+  'GET /user/delete': {
+    controller: 'UserController',
+    action: 'delete',
+  },
 
 
   /***************************************************************************
