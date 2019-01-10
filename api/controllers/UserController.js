@@ -99,7 +99,7 @@ module.exports = {
         });
       }
       return res.status(200).json({
-        message: 'User fetched successfully',
+        message: 'User retrived successfully',
         data: {...user}
       });
     } catch (error) {

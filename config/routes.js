@@ -51,6 +51,25 @@ module.exports.routes = {
     action: 'delete',
   },
 
+  /*
+   * Expenses routes
+   */
+  'POST /expenses/add': {
+    controller: 'ExpensesController',
+    action: 'create',
+  },
+  'GET /expenses/fetch/:id': {
+    controller: 'ExpensesController',
+    action: 'read',
+  },
+  'PATCH /expenses/update/:id': {
+    controller: 'ExpensesController',
+    action: 'update',
+  },
+  'GET /expenses/delete/:id': {
+    controller: 'ExpensesController',
+    action: 'delete',
+  },
 
   /***************************************************************************
   *                                                                          *

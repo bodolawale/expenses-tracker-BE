@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     }
     jwToken.verify(token, async (err, decoded) => {
       if(err) {
-        return res.status(401).json({error: 'Invalid token'});
+        return res.status(401).json({error: 'Invalid token', err});
       }
       req.user = decoded.data;
       const user = await User.findOne({id : decoded.data.id});
