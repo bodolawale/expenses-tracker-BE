@@ -1,26 +1,25 @@
 /**
- * ExpensesController
+ * CategoryController
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
-const _ = require('lodash');
 
 module.exports = {
   async create(req, res) {
     try {
-      const data = _.pick(req.body, ['type', 'category', 'amount', 'note', 'date']);
+      const data = _.pick(req.body, ['type', 'name', 'chatColor', 'expenses']);
       data.user = req.user.id;
-      const expenses = await Expenses.create(data).fetch();
+      const category = await Category.create(data).fetch();
       return res.status(201).json({
         success: true,
-        message: 'Expenses added Successfully',
-        data: { ...expenses },
+        message: 'Category added Successfully',
+        data: { ...category },
       });
     } catch (error) {
       return res.status(400).json({
         success: false,
-        message: 'Unable to add expenses',
+        message: 'Unable to add category',
         error: { ...error },
       });
     }
@@ -29,22 +28,22 @@ module.exports = {
   async read(req, res) {
     try {
       const criteria = { id: req.params.id, user: req.user.id };
-      const expenses = await Expenses.findOne(criteria).populate('category');
-      if (!expenses) {
+      const category = await Category.findOne(criteria).populate('expenses');
+      if (!category) {
         return res.status(404).json({
           success: false,
-          message: 'Expenses not found',
+          message: 'Category not found',
         });
       }
       return res.status(200).json({
         success: true,
-        message: 'Expenses retrived Successfully',
-        data: { ...expenses },
+        message: 'Category retrived Successfully',
+        data: { ...category },
       });
     } catch (error) {
       return res.status(400).json({
         success: false,
-        message: 'Unable to retrive expenses',
+        message: 'Unable to retrive category',
         error: { ...error },
       });
     }
@@ -53,23 +52,23 @@ module.exports = {
   async update(req, res) {
     try {
       const criteria = { id: req.params.id, user: req.user.id };
-      const data = _.pick(req.body, ['type', 'category', 'amount', 'note', 'date']);
-      const expenses = await Expenses.update(criteria).set(data).fetch();
-      if (!expenses.length) {
+      const data = _.pick(req.body, ['type', 'name', 'chatColor', 'expenses']);
+      const category = await Category.update(criteria).set(data).fetch();
+      if (!category.length) {
         return res.status(404).json({
           success: false,
-          message: 'Expenses not found',
+          message: 'Category not found',
         });
       }
       return res.status(200).json({
         success: true,
-        message: 'Expenses updated Successfully',
-        data: { ...expenses[0] },
+        message: 'Category updated Successfully',
+        data: { ...category[0] },
       });
     } catch (error) {
       return res.status(400).json({
         success: false,
-        message: 'Unable to update expenses',
+        message: 'Unable to update category',
         error: { ...error },
       });
     }
@@ -78,25 +77,26 @@ module.exports = {
   async delete(req, res) {
     try {
       const criteria = { id: req.params.id, user: req.user.id };
-      const expenses = await Expenses.destroy(criteria).fetch();
-      if (!expenses.length) {
+      const category = await Category.destroy(criteria).fetch();
+      if (!category.length) {
         return res.status(404).json({
           success: false,
-          message: 'Expenses not found',
+          message: 'Category not found',
         });
       }
       return res.status(200).json({
         success: true,
-        message: 'Expenses deleted Successfully',
-        data: { ...expenses[0] },
+        message: 'Category deleted Successfully',
+        data: { ...category[0] },
       });
     } catch (error) {
       return res.status(400).json({
         success: false,
-        message: 'Unable to delete expenses',
+        message: 'Unable to delete category',
         error: { ...error },
       });
     }
   }
+
 };
 
