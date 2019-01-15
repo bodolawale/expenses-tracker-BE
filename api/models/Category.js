@@ -1,5 +1,5 @@
 /**
- * Expenses.js
+ * Category.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -15,23 +15,22 @@ module.exports = {
     type: {
       type: 'string',
       isIn: ['expenses', 'income'],
-      required: true
+      required: true,
     },
-    date: {
+    name: {
       type: 'string',
-      columnType: 'datetime',
-      required: true
+      required: true,
     },
-    category: {
-      model: 'category',
-    },
-    amount: {
-      type: 'number',
-      required: true
-    },
-    note: {
+    chatColor: {
       type: 'string',
-    }
+      required: true,
+      // regex: /^#(?:[0-9a-fA-F]{3}){1,2}$/
+    },
+    expenses: {
+      collection: 'expenses',
+      via: 'category'
+    },
   },
+
 };
 

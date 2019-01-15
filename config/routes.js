@@ -71,6 +71,26 @@ module.exports.routes = {
     action: 'delete',
   },
 
+  /*
+   * Expenses routes
+   */
+  'POST /category/add': {
+    controller: 'CategoryController',
+    action: 'create',
+  },
+  'GET /category/fetch/:id': {
+    controller: 'CategoryController',
+    action: 'read',
+  },
+  'PATCH /category/update/:id': {
+    controller: 'CategoryController',
+    action: 'update',
+  },
+  'GET /category/delete/:id': {
+    controller: 'CategoryController',
+    action: 'delete',
+  },
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
